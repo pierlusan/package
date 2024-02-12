@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use LP\surveys\Models\Module;
 use LP\surveys\Models\Question;
 use LP\surveys\Models\Survey;
+use LP\surveys\Models\Survey_responses;
 
 class SurveysController extends Controller
 {
@@ -96,11 +97,46 @@ class SurveysController extends Controller
                 $question = $module->questions()->create(['question' => $data['question'],'type'=>$data['type'],'immagine'=>$foto,'points'=>5]);
             }
         }elseif ($data['type'] == 'linear_scale'){
-            $question = $module->questions()->create(['question' => $data['question'],'type'=>$data['type'],'from'=>$data['from'],'to'=> $data['to']]);
-            $question->answers()->createMany($data['etichette']);
+            $question = $module->questions()->create(['question' => $data['question'],'type'=>$data['type']]);
+            //dd($question->answerLinear());
+            $question->answerLinear()->create([
+                'from'=>$data['from'],
+                'to'=>$data['to'],
+                'fromAnswer'=> $data['fromAnswer'],
+                'toAnswer'=>$data['toAnswer'],
+                //'question_id'=>$question->id
+            ]);
         }
 
         return redirect('surveys/edit/'.$idSurvey);
+    }
+
+
+    public function showSurvey($idSurvey,$idModulo = null)
+    {
+        $survey = Survey::findOrFail($idSurvey);
+        if($idModulo == null){
+            $module = Module::where('survey_id',$idSurvey)->where('module_number',1)->first();
+        }else{
+            $module = Module::where('survey_id',$idSurvey)->where('module_number',$idModulo)->first();
+        }
+        $ques = $module->questions->first();
+
+        return view('surveys::complete', compact('survey','module','ques'),);
+    }
+
+    public function saveResponse()
+    {
+        dd(request()->all());
+        $data = request();
+
+        foreach ($data['responses'] as $response){
+            $surveyResponse = new Survey_responses();
+            $surveyResponse->question_id = $response['question'];
+            $surveyResponse->answer_id = $response['answer'];
+        }
+
+
     }
 
 }

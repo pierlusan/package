@@ -44,10 +44,10 @@
                                     <option>9</option>
                                     <option>10</option>
                                 </select><br>
-                                <input placeholder="Etichetta" type="text" name="etichette[][answer]"
+                                <input placeholder="Etichetta" type="text" name="fromAnswer"
                                        class="block bg-stone-300 border-stone-600 focus:border-stone-700 focus:ring-stone-700 w-full shadow-md mt-2"
                                        id="etichetta1"><br>
-                                <input placeholder="Etichetta" type="text" name="etichette[][answer]"
+                                <input placeholder="Etichetta" type="text" name="toAnswer"
                                        class="block bg-stone-300 border-stone-600 focus:border-stone-700 focus:ring-stone-700 w-full shadow-md mt-2"
                                        id="etichetta2" >
                             </div>

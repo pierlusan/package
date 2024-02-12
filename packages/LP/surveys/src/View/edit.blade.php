@@ -41,7 +41,6 @@
                                                         <div class="col">
                                                             Domanda: {{$question->question}}
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             @endforeach

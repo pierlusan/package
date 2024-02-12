@@ -18,4 +18,11 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+
+    public function answerLinear()
+    {
+        return $this->hasOne(AnswerLinear::class);
+    }
+
 }

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->bigInteger('answer_id')->unsigned();
             $table->foreign('answer_id')->references('id')->on('answers');
 
-
             $table->bigInteger('survey_id')->unsigned();
             $table->foreign('survey_id')->references('id')->on('surveys');
 

@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('question');
             $table->string('immagine')->nullable();
             $table->bigInteger('points')->nullable();
-            $table->bigInteger('from')->nullable();
-            $table->bigInteger('to')->nullable();
+
             //id modulo
             $table->bigInteger('module_id')->unsigned();
             $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');

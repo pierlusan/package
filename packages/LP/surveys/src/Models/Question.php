@@ -20,9 +20,5 @@ class Question extends Model
     }
 
 
-    public function answerLinear()
-    {
-        return $this->hasOne(AnswerLinear::class);
-    }
 
 }

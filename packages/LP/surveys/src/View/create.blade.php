@@ -4,7 +4,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="container">
-                    <form action="./create" method="post">
+                    <form action="{{route('surveys.store')}}" method="post">
+                        @csrf
                         <div class="card-header">
                             Crea questionario
                         </div>

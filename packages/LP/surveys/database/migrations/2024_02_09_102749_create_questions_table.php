@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('question');
             $table->string('immagine')->nullable();
             $table->bigInteger('points')->nullable();
+            $table->bigInteger('from')->nullable();
+            $table->bigInteger('to')->nullable();
+            $table->string('fromAnswer')->nullable();
+            $table->string('toAnswer')->nullable();
 
             //id modulo
             $table->bigInteger('module_id')->unsigned();

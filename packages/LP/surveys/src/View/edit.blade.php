@@ -6,6 +6,7 @@
             <div class="card">
                 <div class="container">
                     <form action="./add_module/{{$survey->id}}" method="get">
+                        @csrf
                         <div class="card-header">
                             <div class="row">
                                 <div class="col">

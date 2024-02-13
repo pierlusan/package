@@ -5,6 +5,7 @@
             <div class="card">
                 <div class="container">
                     <form action="" method="post">
+                        @csrf
                         <div class="card-header">
                             Crea nuovo modulo
                         </div>

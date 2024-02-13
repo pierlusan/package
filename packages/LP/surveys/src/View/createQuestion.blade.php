@@ -5,6 +5,7 @@
             <div class="card">
                 <div class="container">
                     <form action="" method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Domanda</span>
                             <label class="ml-auto">Points: 5 </label>

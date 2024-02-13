@@ -4,13 +4,13 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="container">
-                    <form action="./saveResponse/{{$survey->id}}" method="post">
+                    <form action="{{route('surveys.saveResponse',['survey'=>$survey->id,'module'=>$module->id])}}" method="post">
                         @csrf
                         <div class="card-header mt-3">
                             <div class="row">
                                 <div class="col">
-                                    Titolo: {{$survey->title}}<br>
-                                    Descrizione: {{$survey->description}}
+                                    Titolo: <strong>{{$survey->title}}</strong><br>
+                                    Descrizione: <strong>{{$survey->description}}</strong>
                                 </div>
                             </div>
                         </div>
@@ -19,8 +19,8 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col">
-                                            Titolo: {{$module->title}}<br>
-                                            Descrizione: {{$module->description}}
+                                            Titolo: <strong>{{$module->title}}</strong><br>
+                                            Descrizione: <strong>{{$module->description}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -44,8 +44,7 @@
 
                                                                     <input type="radio"
                                                                            name="responses[{{$key}}][answer]"
-                                                                           value="{{$answer->id}}"
-                                                                    >
+                                                                           value="{{$answer->id}}" required>
                                                                     <input type="hidden" name="responses[{{$key}}][question]"
                                                                            value="{{$question->id }}">
 
@@ -67,24 +66,26 @@
                                                 <div class="card-body">
                                                     <div class="row col-5">
                                                         <p class="fw-bold">{{$question->question}}</p>
-
                                                         @foreach($question->answers as $answer)
                                                             <div class="form-check mb-2">
+                                                                <label class="form-check-label" for="radioExample1">
+                                                                    {{$answer->answer}}
+
                                                                 <input class="form-check-input" type="radio"
                                                                        name="responses[{{$key}}][answer]"
-                                                                       value="{{$answer->id}}">
+                                                                       value="{{$answer->id}}" required>
+                                                                </label>
                                                                 <input type="hidden" name="responses[{{$key}}][question]"
                                                                        value="{{$question->id }}">
                                                                 {{$answer->next_module_id}}
-                                                                <input type="hidden" name="responses[{{$key}}][next]"
-                                                                       value="{{$answer->next_module_id}}">
                                                                 <input type="hidden" name="responses[{{$key}}][questionPoints]"
                                                                        value="{{$question->points }}">
+
+                                                                <input type="hidden" name="responses[{{$key}}][next]"
+                                                                       value="{{$answer->next_module_id}}">
+
                                                                 <input type="hidden" name="responses[{{$key}}][answerValue]"
                                                                        value="{{$answer->value }}">
-                                                                <label class="form-check-label" for="radioExample1">
-                                                                    {{$answer->answer}}
-                                                                </label>
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -109,7 +110,7 @@
                                                         </div>
                                                         <div class="form-group mt-4">
                                                             <input type="text" class="form-control"
-                                                                   name="responses[{{$key}}][textAnswer]">
+                                                                   name="responses[{{$key}}][textAnswer]" required>
                                                             <input type="hidden" name="responses[{{$key}}][question]"
                                                                    value="{{$question->id }}">
                                                         </div>
@@ -128,7 +129,8 @@
                                                                 <input class="form-check-input" type="checkbox"
                                                                        name="responses[{{$key}}][answers][]"
                                                                        value="{{$answer->id}}"
-                                                                       id="flexCheckDefault"/>
+                                                                       id="flexCheckDefault"
+                                                                       />
                                                                 <label class="form-check-label"
                                                                        for="flexCheckDefault">
                                                                     {{$answer->answer}}

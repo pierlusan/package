@@ -143,9 +143,9 @@ class SurveysController extends Controller
         return view('surveys::complete', compact('survey','module','ques'),);
     }
 
-    public function saveResponse($idSurvey)
+    public function saveResponse($idSurvey,$idModule)
     {
-        dd(request()->all());
+        //dd(request()->all());
         $data = request();
         $nextModule = null;
         foreach ($data['responses'] as $response){
@@ -156,16 +156,16 @@ class SurveysController extends Controller
                 $surveyResponse->answer_id = $response['answer'];
                 $surveyResponse->user = Auth::user()->id;
                 if(array_key_exists('questionPoints',$response)){
-                    $surveyResponse->valore_risposta = $response['answerValue'];
+                    $answer = Answer::where('id',$response['answer'])->first();
+                    $surveyResponse->valore_risposta = $answer->value;
                     $surveyResponse->valore_domanda = $response['questionPoints'];
-                    $nextModule = $response['next'];
+                    $nextModule = $answer->next_module_id;
                 }
                 $surveyResponse->save();
             }
             if(!array_key_exists('answer',$response)){
                 if(!array_key_exists('textAnswer',$response)){
                    foreach($response['answers'] as $item){
-
                        $surveyResponse = new Survey_responses();
                        $surveyResponse->question_id = $response['question'];
                        $surveyResponse->survey_id = $idSurvey;
@@ -183,6 +183,16 @@ class SurveysController extends Controller
                 }
             }
             //dd(Auth::user());
+        }
+        //dd($nextModule);
+        if($nextModule == null){
+            $module = FlowLogic::where('current_module_id',$idModule)->first();
+            if($module == null){
+               return redirect('surveys/create');
+            }
+            return redirect('surveys/'.$idSurvey.'/'.$module->next_module_id);
+        }else{
+            return redirect('surveys/'.$idSurvey.'/'.$nextModule);
         }
 
     }

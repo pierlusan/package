@@ -122,7 +122,7 @@
             '<select name="answers['+counter+'][next_module_id]">'+
             '<option value=>Modulo successivo</option>'+
                 '@foreach($survey->modules as $modules)'+
-                '<option value={{$module->id}}>{{$modules->title}}</option>'+
+                '<option value={{$modules->id}}>{{$modules->title}}</option>'+
                 '@endforeach'+
             '</select>'+
             '</div>';

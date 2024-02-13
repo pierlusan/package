@@ -14,8 +14,8 @@ Route::middleware(['web'])->group(function () {
     Route::post('surveys/edit/add_module/{survey}',[SurveysController::class, 'storeModule']);
     Route::get('surveys/edit/add_question/{survey}/{module}',[SurveysController::class , 'createQuestion']);
     Route::post('surveys/edit/add_question/{survey}/{module}',[SurveysController::class , 'storeQuestion']);
-    Route::get('surveys/{survey}/{module?}',[SurveysController::class,'showSurvey']);
-    Route::post('surveys/saveResponse/{survey}',[SurveysController::class,'saveResponse'])->name('surveys.saveResponse');
+    Route::get('surveys/{survey}/{module?}',[SurveysController::class,'showSurvey'])->name('surveys.showSurvey');
+    Route::post('surveys/saveResponse/{survey}/{module}',[SurveysController::class,'saveResponse'])->name('surveys.saveResponse');
 });
 
 

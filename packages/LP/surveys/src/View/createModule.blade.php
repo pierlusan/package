@@ -4,7 +4,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="container">
-                    <form action="" method="post">
+                    <form action="{{route('surveys.storeModule',['survey'=>$survey->id])}}" method="post">
                         @csrf
                         <div class="card-header">
                             Crea nuovo modulo

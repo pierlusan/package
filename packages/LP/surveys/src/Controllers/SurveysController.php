@@ -11,6 +11,7 @@ use LP\surveys\Models\Module;
 use LP\surveys\Models\Question;
 use LP\surveys\Models\Survey;
 use LP\surveys\Models\Survey_responses;
+use LP\surveys\Models\SurveyUser;
 
 class SurveysController extends Controller
 {
@@ -133,15 +134,17 @@ class SurveysController extends Controller
     public function showSurvey($idSurvey,$idModulo = null)
     {
         $survey = Survey::findOrFail($idSurvey);
+
         if($idModulo == null){
             $module = Module::where('survey_id',$idSurvey)->where('module_number',1)->first();
         }else{
-            $module = Module::where('survey_id',$idSurvey)->where('module_number',$idModulo)->first();
+            $module = Module::where('id',$idModulo)->first();
+            //dd($module);
         }
-        $ques = $module->questions->first();
-
-        return view('surveys::complete', compact('survey','module','ques'),);
+        return view('surveys::complete', compact('survey','module'));
     }
+
+
 
     public function saveResponse($idSurvey,$idModule)
     {
@@ -160,6 +163,7 @@ class SurveysController extends Controller
                     $surveyResponse->valore_risposta = $answer->value;
                     $surveyResponse->valore_domanda = $response['questionPoints'];
                     $nextModule = $answer->next_module_id;
+                    //dd($nextModule);
                 }
                 $surveyResponse->save();
             }
@@ -187,6 +191,7 @@ class SurveysController extends Controller
         //dd($nextModule);
         if($nextModule == null){
             $module = FlowLogic::where('current_module_id',$idModule)->first();
+            //dd($module->next_module_id);
             if($module == null){
                return redirect('surveys/create');
             }
@@ -196,5 +201,42 @@ class SurveysController extends Controller
         }
 
     }
+
+    public function showResponses($idSurvey,$user)
+    {
+        $responses = Survey_responses::where('survey_id',$idSurvey)->where('user',$user)->get();
+        return view('surveys::showResults',compact('responses'));
+    }
+
+
+    public static function allSurveys()
+    {
+        $surveys = Survey::all();
+        return $surveys;
+    }
+
+    public static function setSurveyToUser($user,$idSurvey)
+    {
+        $surveyUser = new SurveyUser();
+        $surveyUser->user = $user;
+        $surveyUser->survey_id = $idSurvey;
+        $surveyUser->save();
+        return redirect('/');
+    }
+
+    public static function getUserSurveys($user)
+    {
+        $userSurveys = SurveyUser::where('user', $user)->get();
+        $surveys = [];
+        foreach ($userSurveys as $userSurvey) {
+            $survey = Survey::where('id',$userSurvey->survey_id)->first();
+            $surveys[]= $survey;
+
+        }
+
+        return $surveys;
+    }
+
+
 
 }

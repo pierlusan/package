@@ -14,4 +14,9 @@ class Answer extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function surveyResponse()
+    {
+        return $this->hasOne(Survey_responses::class);
+    }
 }

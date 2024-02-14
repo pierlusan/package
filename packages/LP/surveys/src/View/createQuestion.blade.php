@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="container">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="{{route('surveys.storeQuestion',['survey'=>$survey->id,'module'=>$module->id])}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>Domanda</span>

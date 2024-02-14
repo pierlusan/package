@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="container">
-                    <form action="./add_module/{{$survey->id}}" method="get">
+                    <form action="{{route('surveys.createModule',['survey'=>$survey->id])}}" method="get">
                         @csrf
                         <div class="card-header">
                             <div class="row">
